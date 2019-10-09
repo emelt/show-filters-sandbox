@@ -60,5 +60,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Sho_w. needs your permission to access camera to create videos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Sho_w. needs your permission to access microphone to create videos</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Sho_w. needs your permission to save videos to your phone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Sho_w. needs your permission to access your photos to import them for editing</string>
 </dict>
 </plist>

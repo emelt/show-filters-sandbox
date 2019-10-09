@@ -1,57 +1,76 @@
 //
-//  ViewController.swift
-//  Show Filter Sandbox
+//  CameraViewController.swift
+//  CameraKit
 //
-//  Created by Connor Bell on 2019-10-07.
-//  Copyright © 2019 Mav Farm. All rights reserved.
+//  Created by Geppy Parziale on 7/23/18.
+//  Copyright © 2018 INVASIVECODE, Inc. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 import MetalKit
 import CoreMedia
-import AVFoundation
+import os.log
 
-class CameraViewController: UIViewController {
+protocol CameraViewControllerDelegate: class {
+    func cameraViewDidToggleCamera(to position: AVCaptureDevice.Position)
+    func cameraViewDidFinishProcessingVideo(at videoURL: URL)
+}
 
+public final class CameraViewController: UIViewController {
+    
     enum SessionSetupResult {
         case success
         case notAuthorized
         case configurationFailed
     }
     
-    internal let session = AVCaptureSession()
-    var videoDevice: AVCaptureDevice?
+    weak var delegate: CameraViewControllerDelegate?
     var movieRecorder = MovieRecorder()
-
-    private var setupResult = SessionSetupResult.success
-    #if !targetEnvironment(simulator)
-    private var metalView = MetalView()
-    #endif
-    internal var currentCameraPosition: AVCaptureDevice.Position
-    private let referenceTime: CFTimeInterval = CFAbsoluteTimeGetCurrent()
-    private var filter: Filter
     private var videoOutput: AVCaptureVideoDataOutput?
     private var audioOutput: AVCaptureAudioDataOutput?
     private var isVideoRecording = false
     
+    internal let session = AVCaptureSession()
+    var videoDevice: AVCaptureDevice?
+    private var setupResult = SessionSetupResult.success
+    #if !targetEnvironment(simulator)
+    private var metalView = MetalView()
+    #endif
+    private var filter: Filter = MetalHelper.shared.passthroughKernel
+    
+    internal var currentCameraPosition: AVCaptureDevice.Position
+    private let referenceTime: CFTimeInterval = CFAbsoluteTimeGetCurrent()
+    private var hasConfiguredOutputs: Bool = false
     private let sessionQueue = DispatchQueue(label: "com.mavfarm.camera.sessionQueue", qos: .background)
     private let audioQueue = DispatchQueue(label: "com.mavfarm.camera.audioQueue")
     private let videoQueue = DispatchQueue(label: "com.mavfarm.camera.videoQueue")
     private var audioDeviceInput: AVCaptureDeviceInput?
-    private var hasConfiguredOutputs: Bool = false
-
-    convenience init() {
-        self.init(cameraPosition: .back, filter: MetalHelper.shared.passthroughKernel)
+    
+    override public var shouldAutorotate: Bool {
+        return false
     }
     
-    init(cameraPosition: AVCaptureDevice.Position, filter: Filter) {
-        self.currentCameraPosition = cameraPosition
-        self.filter = filter
-        super.init(nibName: nil, bundle: nil)
+    override public var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    // MARK: Lifecycle
+    
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        self.currentCameraPosition = .back
+        self.filter = MetalHelper.shared.passthroughKernel
+        super.init(coder: aDecoder)
         performInitialSetup()
     }
     
-    override func viewDidLoad() {
+    deinit {
+        self.audioDeviceInput = nil
+    }
+    
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
@@ -72,14 +91,174 @@ class CameraViewController: UIViewController {
             self?.configureSession()
         }
     }
-
-    override public var shouldAutorotate: Bool {
-        return false
+    
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sessionQueue.async { [weak self] in
+            self?.prepareViewForDisplay()
+        }
     }
     
-    override public var prefersStatusBarHidden: Bool {
-        return true
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sessionQueue.async { [weak self] in
+            self?.stopSession()
+        }
     }
+    
+    public override func viewWillTransition(to size: CGSize,
+                                            with coordinator: UIViewControllerTransitionCoordinator) {
+        updateVideoTransformationsForCurrentOrientation()
+    }
+}
+
+// MARK: Setup
+extension CameraViewController {
+    
+    private func performInitialSetup() {
+        setupSubviews()
+        applyConstraints()
+    }
+    
+    private func setupSubviews() {
+        movieRecorder.delegate = self
+        
+        #if !targetEnvironment(simulator)
+        view.addSubview(metalView)
+        #endif
+    }
+    
+    private func applyConstraints() {
+        #if !targetEnvironment(simulator)
+        //metalView.snp.makeConstraints { make in
+        //    make.edges.equalToSuperview()
+        //}
+        #endif
+    }
+}
+
+// MARK: CameraViewRepresentable Implementation
+extension CameraViewController: CameraViewRepresentable {
+    
+    func applyFilter(filter: Filter) {
+        self.filter = filter
+    }
+    
+    func startRecording() {
+        sessionQueue.async { [weak self] in
+            self?.addAudioInput()
+            
+            DispatchQueue.main.async {
+                guard let videoSettings = self?.videoOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov),
+                    let audioSettings = self?.audioOutput?.recommendedAudioSettingsForAssetWriter(writingTo: .mov) as? [String: Any] else { return }
+                
+                self?.movieRecorder.videoSettings = videoSettings
+                self?.movieRecorder.audioSettings = audioSettings
+                self?.movieRecorder.startWriting()
+            }
+        }
+    }
+    
+    func stopRecording() {
+        guard isVideoRecording else { return }
+        sessionQueue.async { [weak self] in
+            self?.removeAudioInput()
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.movieRecorder.stopWriting()
+            }
+        }
+    }
+    
+    func switchCamera() {
+        guard !isVideoRecording else { return }
+        
+        sessionQueue.async { [weak self] in
+            self?.toggleCurrentCamera()
+        }
+    }
+    
+    func configureDevice(for fps: FPS, completion: @escaping (() -> Void)) {
+        
+        switch fps {
+        case .normal:
+            sessionQueue.sync { [weak self] in
+                self?.rebootCamera()
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.updateVideoTransformationsForCurrentOrientation()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.26, execute: completion)
+                }
+            }
+        case .slowmo:
+            sessionQueue.sync { [weak self] in
+                self?.rebootCamera()
+                self?.updateDeviceFormat(for: fps)
+                DispatchQueue.main.async { [weak self] in
+                    self?.updateVideoTransformationsForCurrentOrientation()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.26, execute: completion)
+                }
+            }
+        }
+    }
+    
+    private func updateDeviceFormat(for fps: FPS) {
+        
+        guard let device = videoDevice,
+            let formatProperties = createFormatProperties(forDevice: device, withFramerate: fps) else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.showErrorAlert(withTitle: Localized("error"),
+                                         message: Localized("camera_doesnt_support_framerate"))
+                }
+                return
+        }
+        
+        do {
+            try applyFormat(format: formatProperties.format,
+                            forDevice: device,
+                            minFrameDuration: formatProperties.maxFrameDuration,
+                            maxFrameDuration: formatProperties.maxFrameDuration)
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.showErrorAlert(withTitle: Localized("error"),
+                                     message: Localized("camera_configure_failed"))
+            }
+        }
+    }
+    
+    private func applyFormat(format: AVCaptureDevice.Format,
+                             forDevice device: AVCaptureDevice,
+                             minFrameDuration: CMTime,
+                             maxFrameDuration: CMTime) throws {
+        try device.lockForConfiguration()
+        device.activeFormat = format
+        device.activeVideoMinFrameDuration = minFrameDuration
+        device.activeVideoMaxFrameDuration = maxFrameDuration
+        device.unlockForConfiguration()
+    }
+    
+    func zoom(delta: CGFloat) {
+        guard let device = videoDevice else { return }
+        do {
+            try device.lockForConfiguration()
+            defer { device.unlockForConfiguration() }
+            
+            let desiredValue = device.videoZoomFactor + delta
+            let maxZoomFactor = device.activeFormat.videoMaxZoomFactor
+            let zoomFactor = max(1.0, min(desiredValue, maxZoomFactor))
+            device.videoZoomFactor = zoomFactor
+        } catch {
+            debugPrint(error)
+        }
+    }
+}
+
+// MARK: Session Interactors
+/*
+ All of these functions must be called from the sessionQueue
+ */
+
+extension CameraViewController {
     
     private func prepareViewForDisplay() {
         
@@ -92,12 +271,12 @@ class CameraViewController: UIViewController {
             }
         case .notAuthorized:
             DispatchQueue.main.async { [weak self] in
-                //self?.promptToAppSettings()
+                self?.promptToAppSettings()
             }
         case .configurationFailed:
             DispatchQueue.main.async { [weak self] in
-                //self?.showErrorAlert(withTitle: "error",
-                //                   message: "media_capture_error")
+                self?.showErrorAlert(withTitle: Localized("error"),
+                                     message: Localized("media_capture_error"))
             }
         }
     }
@@ -160,6 +339,34 @@ class CameraViewController: UIViewController {
         }
     }
     
+    private func addAudioInput() {
+        do {
+            guard let audioDevice = AVCaptureDevice.default(for: .audio) else { return }
+            let audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
+            self.audioDeviceInput = audioDeviceInput
+            
+            session.beginConfiguration()
+            if session.canAddInput(audioDeviceInput) {
+                session.addInput(audioDeviceInput)
+            }
+            else {
+                print("Could not add audio device input to the session")
+            }
+            session.commitConfiguration()
+        }
+        catch {
+            print("Could not create audio device input: \(error)")
+        }
+    }
+    
+    private func removeAudioInput() {
+        if let audioDeviceInput = self.audioDeviceInput {
+            session.beginConfiguration()
+            session.removeInput(audioDeviceInput)
+            session.commitConfiguration()
+        }
+    }
+    
     private func configureSessionOutputs() {
         guard !hasConfiguredOutputs else { return }
         session.beginConfiguration()
@@ -172,7 +379,7 @@ class CameraViewController: UIViewController {
             session.addOutput(dataOutput)
         }
         
-        dataOutput.setSampleBufferDelegate(self as! AVCaptureVideoDataOutputSampleBufferDelegate, queue: videoQueue)
+        dataOutput.setSampleBufferDelegate(self, queue: videoQueue)
         self.videoOutput = dataOutput
         
         let audioOutput = AVCaptureAudioDataOutput()
@@ -181,23 +388,10 @@ class CameraViewController: UIViewController {
             session.addOutput(audioOutput)
         }
         
-        audioOutput.setSampleBufferDelegate(self as! AVCaptureAudioDataOutputSampleBufferDelegate, queue: audioQueue)
+        audioOutput.setSampleBufferDelegate(self, queue: audioQueue)
         self.audioOutput = audioOutput
         session.commitConfiguration()
         hasConfiguredOutputs = true
-    }
-    
-    private func rebootCamera() {
-        session.stopRunning()
-        removeSessionInputs()
-        configureSession()
-        session.startRunning()
-    }
-    
-    private func removeSessionInputs() {
-        session.inputs.forEach({ input in
-            session.removeInput(input)
-        })
     }
     
     private func toggleCurrentCamera() {
@@ -216,6 +410,131 @@ class CameraViewController: UIViewController {
         }
     }
     
+    private func startSession() {
+        if !session.isRunning {
+            session.startRunning()
+        }
+    }
+    
+    private func rebootCamera() {
+        session.stopRunning()
+        removeSessionInputs()
+        configureSession()
+        session.startRunning()
+    }
+    
+    private func stopSession() {
+        if session.isRunning {
+            session.stopRunning()
+        }
+    }
+    
+    private func removeSessionInputs() {
+        session.inputs.forEach({ input in
+            session.removeInput(input)
+        })
+    }
+}
+
+// MARK: AVCaptureVideoDataOutputSampleBufferDelegate & AVCaptureAudioDataOutputSampleBufferDelegate Implementation
+extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
+    
+    public func captureOutput(_ output: AVCaptureOutput,
+                              didOutput sampleBuffer: CMSampleBuffer,
+                              from connection: AVCaptureConnection) {
+        if output == videoOutput {
+            synchronized(self) {
+                processVideoOutput(output, didOutput: sampleBuffer, from: connection)
+            }
+        } else if output == audioOutput {
+            synchronized(self) {
+                processAudioOutput(output, didOutput: sampleBuffer, from: connection)
+            }
+        }
+    }
+    
+    private func processVideoOutput(_ output: AVCaptureOutput,
+                                    didOutput sampleBuffer: CMSampleBuffer,
+                                    from connection: AVCaptureConnection) {
+        
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        let presentationTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        let width = CVPixelBufferGetWidth(pixelBuffer)
+        let height = CVPixelBufferGetHeight(pixelBuffer)
+        
+        guard let texture = createTexture(for: filter, buffer: pixelBuffer) else { return }
+        
+        #if !targetEnvironment(simulator)
+        DispatchQueue.main.async {
+            self.metalView.drawableSize = CGSize(width: width, height: height)
+            self.metalView.inputTexture = texture
+        }
+        #endif
+        
+        movieRecorder.configureVideoFormatDescription(for: texture)
+        guard isVideoRecording else { return }
+        movieRecorder.appendTexture(texture, withPresentationTime: presentationTime)
+    }
+    
+    private func createTexture(for filter: Filter?, buffer: CVImageBuffer) -> MTLTexture? {
+        guard let filter = filter else { return nil }
+        
+        let time = CFAbsoluteTimeGetCurrent() - referenceTime
+        return FilterHelper.shared.applyFilter(to: buffer,
+                                               filter: filter,
+                                               time: Float(time))
+    }
+    
+    private func processAudioOutput(_ output: AVCaptureOutput,
+                                    didOutput sampleBuffer: CMSampleBuffer,
+                                    from connection: AVCaptureConnection) {
+        
+        movieRecorder.configureAudioFormatDescription(forBuffer: sampleBuffer)
+        
+        guard isVideoRecording else { return }
+        movieRecorder.appendAudioSampleBuffer(sampleBuffer)
+    }
+}
+
+// MARK: MovieRecorderDelegate Implementation
+extension CameraViewController: MovieRecorderDelegate {
+    
+    func movieRecorderDidBeginWriting(movieRecorder: MovieRecorder) {
+        isVideoRecording = true
+    }
+    
+    func movieRecorderDidFinishWriting(movieRecorder: MovieRecorder, url: URL) {
+        isVideoRecording = false
+        self.delegate?.cameraViewDidFinishProcessingVideo(at: url)
+    }
+}
+
+// MARK: Actions
+extension CameraViewController {
+    
+    private func promptToAppSettings() {
+        let alertController = UIAlertController(title: Localized("Error"),
+                                                message: Localized("camera_permission_error"),
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Localized("OK"),
+                                                style: .cancel,
+                                                handler: nil))
+        alertController.addAction(UIAlertAction(title: Localized("Settings"),
+                                                style: .default, handler: { action in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
+                                      options: [:],
+                                      completionHandler: nil)
+        }))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showErrorAlert(withTitle title: String?, message: String?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Localized("ok"), style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
     private func updateVideoTransformationsForCurrentOrientation() {
         guard let connection = videoOutput?.connection(with: .video),
             connection.isVideoOrientationSupported else { return }
@@ -227,31 +546,7 @@ class CameraViewController: UIViewController {
     }
 }
 
-// MARK: Setup
-extension CameraViewController {
-    
-    private func performInitialSetup() {
-        setupSubviews()
-        applyConstraints()
-    }
-    
-    private func setupSubviews() {
-        movieRecorder.delegate = self
-        
-        #if !targetEnvironment(simulator)
-        view.addSubview(metalView)
-        #endif
-    }
-    
-    private func applyConstraints() {
-        #if !targetEnvironment(simulator)
-        metalView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        #endif
-    }
-}
-
+// MARK: Helpers
 extension CameraViewController {
     
     private func calculatePreviewLayerOrientation() -> AVCaptureVideoOrientation {

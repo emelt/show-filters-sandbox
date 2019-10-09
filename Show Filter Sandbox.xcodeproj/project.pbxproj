@@ -9,12 +9,45 @@
 /* Begin PBXBuildFile section */
 		B9409997234B845C0037FC5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409996234B845C0037FC5E /* AppDelegate.swift */; };
 		B9409999234B845C0037FC5E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409998234B845C0037FC5E /* SceneDelegate.swift */; };
-		B940999B234B845C0037FC5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940999A234B845C0037FC5E /* ViewController.swift */; };
+		B940999B234B845C0037FC5E /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940999A234B845C0037FC5E /* CameraViewController.swift */; };
 		B940999E234B845C0037FC5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B940999C234B845C0037FC5E /* Main.storyboard */; };
 		B94099A0234B845E0037FC5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B940999F234B845E0037FC5E /* Assets.xcassets */; };
 		B94099A3234B845E0037FC5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B94099A1234B845E0037FC5E /* LaunchScreen.storyboard */; };
 		B94099AE234B845E0037FC5E /* Show_Filter_SandboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099AD234B845E0037FC5E /* Show_Filter_SandboxTests.swift */; };
 		B94099B9234B845E0037FC5E /* Show_Filter_SandboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099B8234B845E0037FC5E /* Show_Filter_SandboxUITests.swift */; };
+		B94099C8234B84FC0037FC5E /* PassthroughKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B94099C6234B84FB0037FC5E /* PassthroughKernel.metal */; };
+		B94099C9234B84FC0037FC5E /* PassthroughKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099C7234B84FB0037FC5E /* PassthroughKernel.swift */; };
+		B94099D7234B88F20037FC5E /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099CB234B88F10037FC5E /* Kernel.swift */; };
+		B94099D8234B88F20037FC5E /* FilterAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099CC234B88F10037FC5E /* FilterAuthor.swift */; };
+		B94099D9234B88F20037FC5E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099CD234B88F10037FC5E /* Parameter.swift */; };
+		B94099DA234B88F20037FC5E /* ParameterKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099CE234B88F10037FC5E /* ParameterKeys.swift */; };
+		B94099DB234B88F20037FC5E /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099CF234B88F10037FC5E /* TextureLoader.swift */; };
+		B94099DD234B88F20037FC5E /* TextureParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D1234B88F10037FC5E /* TextureParameter.swift */; };
+		B94099DE234B88F20037FC5E /* FloatParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D2234B88F10037FC5E /* FloatParameter.swift */; };
+		B94099DF234B88F20037FC5E /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D3234B88F10037FC5E /* Filter.swift */; };
+		B94099E0234B88F20037FC5E /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D4234B88F10037FC5E /* Transition.swift */; };
+		B94099E1234B88F20037FC5E /* FilterParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D5234B88F10037FC5E /* FilterParameters.swift */; };
+		B94099E2234B88F20037FC5E /* IntParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099D6234B88F10037FC5E /* IntParameter.swift */; };
+		B94099E4234B94020037FC5E /* MovieRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099E3234B94020037FC5E /* MovieRecorder.swift */; };
+		B94099E6234B97B30037FC5E /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099E5234B97B30037FC5E /* LocalizationManager.swift */; };
+		B94099E8234B98250037FC5E /* FPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099E7234B98250037FC5E /* FPS.swift */; };
+		B94099EA234B983D0037FC5E /* CameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099E9234B983D0037FC5E /* CameraViewRepresentable.swift */; };
+		B94099EC234B9B360037FC5E /* ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099EB234B9B360037FC5E /* ObjC.swift */; };
+		B94099EE234B9E770037FC5E /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099ED234B9E770037FC5E /* VideoProcessor.swift */; };
+		B94099F0234B9ED60037FC5E /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099EF234B9ED60037FC5E /* FilterHelper.swift */; };
+		B94099F2234B9FA20037FC5E /* CenteredItemViewConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099F1234B9FA20037FC5E /* CenteredItemViewConvertible.swift */; };
+		B94099F4234B9FE20037FC5E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099F3234B9FE20037FC5E /* Event.swift */; };
+		B94099F6234BA38D0037FC5E /* AssetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099F5234BA38D0037FC5E /* AssetHelper.swift */; };
+		B94099F8234BA4160037FC5E /* MetalTextureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099F7234BA4160037FC5E /* MetalTextureHelper.swift */; };
+		B94099FD234BA4830037FC5E /* SimulatorMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099FA234BA4830037FC5E /* SimulatorMetalView.swift */; };
+		B94099FE234BA4830037FC5E /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099FB234BA4830037FC5E /* MetalView.swift */; };
+		B94099FF234BA4830037FC5E /* MetalViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94099FC234BA4830037FC5E /* MetalViewRepresentable.swift */; };
+		B9409A01234BA4C70037FC5E /* MetalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A00234BA4C70037FC5E /* MetalHelper.swift */; };
+		B9409A03234BA5E50037FC5E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A02234BA5E50037FC5E /* FoundationExtensions.swift */; };
+		B9409A05234BA6140037FC5E /* LocalURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A04234BA6140037FC5E /* LocalURLBuilder.swift */; };
+		B9409A07234BA6290037FC5E /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A06234BA6290037FC5E /* Storage.swift */; };
+		B9409A09234BA64E0037FC5E /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A08234BA64D0037FC5E /* String+Helpers.swift */; };
+		B9409A0B234BA6ED0037FC5E /* MetalHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409A0A234BA6ED0037FC5E /* MetalHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +71,7 @@
 		B9409993234B845C0037FC5E /* Show Filter Sandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Show Filter Sandbox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9409996234B845C0037FC5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9409998234B845C0037FC5E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B940999A234B845C0037FC5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B940999A234B845C0037FC5E /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		B940999D234B845C0037FC5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B940999F234B845E0037FC5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B94099A2234B845E0037FC5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +82,39 @@
 		B94099B4234B845E0037FC5E /* Show Filter SandboxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Show Filter SandboxUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94099B8234B845E0037FC5E /* Show_Filter_SandboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show_Filter_SandboxUITests.swift; sourceTree = "<group>"; };
 		B94099BA234B845E0037FC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B94099C6234B84FB0037FC5E /* PassthroughKernel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PassthroughKernel.metal; sourceTree = "<group>"; };
+		B94099C7234B84FB0037FC5E /* PassthroughKernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughKernel.swift; sourceTree = "<group>"; };
+		B94099CB234B88F10037FC5E /* Kernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kernel.swift; sourceTree = "<group>"; };
+		B94099CC234B88F10037FC5E /* FilterAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterAuthor.swift; sourceTree = "<group>"; };
+		B94099CD234B88F10037FC5E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
+		B94099CE234B88F10037FC5E /* ParameterKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterKeys.swift; sourceTree = "<group>"; };
+		B94099CF234B88F10037FC5E /* TextureLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
+		B94099D1234B88F10037FC5E /* TextureParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureParameter.swift; sourceTree = "<group>"; };
+		B94099D2234B88F10037FC5E /* FloatParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatParameter.swift; sourceTree = "<group>"; };
+		B94099D3234B88F10037FC5E /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		B94099D4234B88F10037FC5E /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		B94099D5234B88F10037FC5E /* FilterParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterParameters.swift; sourceTree = "<group>"; };
+		B94099D6234B88F10037FC5E /* IntParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntParameter.swift; sourceTree = "<group>"; };
+		B94099E3234B94020037FC5E /* MovieRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieRecorder.swift; sourceTree = "<group>"; };
+		B94099E5234B97B30037FC5E /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalizationManager.swift; path = "Show Filter Sandbox/LocalizationManager.swift"; sourceTree = SOURCE_ROOT; };
+		B94099E7234B98250037FC5E /* FPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FPS.swift; path = "Show Filter Sandbox/FPS.swift"; sourceTree = SOURCE_ROOT; };
+		B94099E9234B983D0037FC5E /* CameraViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewRepresentable.swift; sourceTree = "<group>"; };
+		B94099EB234B9B360037FC5E /* ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjC.swift; path = "Show Filter Sandbox/ObjC.swift"; sourceTree = SOURCE_ROOT; };
+		B94099ED234B9E770037FC5E /* VideoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessor.swift; sourceTree = "<group>"; };
+		B94099EF234B9ED60037FC5E /* FilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
+		B94099F1234B9FA20037FC5E /* CenteredItemViewConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredItemViewConvertible.swift; sourceTree = "<group>"; };
+		B94099F3234B9FE20037FC5E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B94099F5234BA38D0037FC5E /* AssetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetHelper.swift; sourceTree = "<group>"; };
+		B94099F7234BA4160037FC5E /* MetalTextureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTextureHelper.swift; sourceTree = "<group>"; };
+		B94099FA234BA4830037FC5E /* SimulatorMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatorMetalView.swift; sourceTree = "<group>"; };
+		B94099FB234BA4830037FC5E /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		B94099FC234BA4830037FC5E /* MetalViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewRepresentable.swift; sourceTree = "<group>"; };
+		B9409A00234BA4C70037FC5E /* MetalHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalHelper.swift; sourceTree = "<group>"; };
+		B9409A02234BA5E50037FC5E /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		B9409A04234BA6140037FC5E /* LocalURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalURLBuilder.swift; sourceTree = "<group>"; };
+		B9409A06234BA6290037FC5E /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		B9409A08234BA64D0037FC5E /* String+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
+		B9409A0A234BA6ED0037FC5E /* MetalHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +165,27 @@
 		B9409995234B845C0037FC5E /* Show Filter Sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				B94099F9234BA4830037FC5E /* MetalView */,
+				B94099CA234B88F10037FC5E /* Filter */,
 				B9409996234B845C0037FC5E /* AppDelegate.swift */,
+				B9409A0A234BA6ED0037FC5E /* MetalHelpers.swift */,
+				B94099F5234BA38D0037FC5E /* AssetHelper.swift */,
+				B94099F1234B9FA20037FC5E /* CenteredItemViewConvertible.swift */,
+				B9409A08234BA64D0037FC5E /* String+Helpers.swift */,
+				B9409A02234BA5E50037FC5E /* FoundationExtensions.swift */,
+				B9409A04234BA6140037FC5E /* LocalURLBuilder.swift */,
+				B9409A06234BA6290037FC5E /* Storage.swift */,
+				B94099ED234B9E770037FC5E /* VideoProcessor.swift */,
+				B94099F3234B9FE20037FC5E /* Event.swift */,
+				B94099F7234BA4160037FC5E /* MetalTextureHelper.swift */,
+				B94099EF234B9ED60037FC5E /* FilterHelper.swift */,
 				B9409998234B845C0037FC5E /* SceneDelegate.swift */,
-				B940999A234B845C0037FC5E /* ViewController.swift */,
+				B940999A234B845C0037FC5E /* CameraViewController.swift */,
+				B94099E9234B983D0037FC5E /* CameraViewRepresentable.swift */,
+				B94099E3234B94020037FC5E /* MovieRecorder.swift */,
+				B94099C6234B84FB0037FC5E /* PassthroughKernel.metal */,
+				B94099C7234B84FB0037FC5E /* PassthroughKernel.swift */,
+				B9409A00234BA4C70037FC5E /* MetalHelper.swift */,
 				B940999C234B845C0037FC5E /* Main.storyboard */,
 				B940999F234B845E0037FC5E /* Assets.xcassets */,
 				B94099A1234B845E0037FC5E /* LaunchScreen.storyboard */,
@@ -127,6 +211,38 @@
 			);
 			path = "Show Filter SandboxUITests";
 			sourceTree = "<group>";
+		};
+		B94099CA234B88F10037FC5E /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				B94099EB234B9B360037FC5E /* ObjC.swift */,
+				B94099E7234B98250037FC5E /* FPS.swift */,
+				B94099E5234B97B30037FC5E /* LocalizationManager.swift */,
+				B94099CB234B88F10037FC5E /* Kernel.swift */,
+				B94099CC234B88F10037FC5E /* FilterAuthor.swift */,
+				B94099CD234B88F10037FC5E /* Parameter.swift */,
+				B94099CE234B88F10037FC5E /* ParameterKeys.swift */,
+				B94099CF234B88F10037FC5E /* TextureLoader.swift */,
+				B94099D1234B88F10037FC5E /* TextureParameter.swift */,
+				B94099D2234B88F10037FC5E /* FloatParameter.swift */,
+				B94099D3234B88F10037FC5E /* Filter.swift */,
+				B94099D4234B88F10037FC5E /* Transition.swift */,
+				B94099D5234B88F10037FC5E /* FilterParameters.swift */,
+				B94099D6234B88F10037FC5E /* IntParameter.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		B94099F9234BA4830037FC5E /* MetalView */ = {
+			isa = PBXGroup;
+			children = (
+				B94099FA234BA4830037FC5E /* SimulatorMetalView.swift */,
+				B94099FB234BA4830037FC5E /* MetalView.swift */,
+				B94099FC234BA4830037FC5E /* MetalViewRepresentable.swift */,
+			);
+			name = MetalView;
+			path = "Show Filter Sandbox/MetalView";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -259,9 +375,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B940999B234B845C0037FC5E /* ViewController.swift in Sources */,
+				B94099E0234B88F20037FC5E /* Transition.swift in Sources */,
+				B94099F0234B9ED60037FC5E /* FilterHelper.swift in Sources */,
+				B94099D7234B88F20037FC5E /* Kernel.swift in Sources */,
+				B94099EE234B9E770037FC5E /* VideoProcessor.swift in Sources */,
+				B940999B234B845C0037FC5E /* CameraViewController.swift in Sources */,
+				B9409A05234BA6140037FC5E /* LocalURLBuilder.swift in Sources */,
+				B94099EC234B9B360037FC5E /* ObjC.swift in Sources */,
+				B94099E4234B94020037FC5E /* MovieRecorder.swift in Sources */,
+				B94099FF234BA4830037FC5E /* MetalViewRepresentable.swift in Sources */,
+				B94099EA234B983D0037FC5E /* CameraViewRepresentable.swift in Sources */,
+				B94099C9234B84FC0037FC5E /* PassthroughKernel.swift in Sources */,
+				B94099DD234B88F20037FC5E /* TextureParameter.swift in Sources */,
+				B94099E2234B88F20037FC5E /* IntParameter.swift in Sources */,
+				B94099E8234B98250037FC5E /* FPS.swift in Sources */,
+				B94099DE234B88F20037FC5E /* FloatParameter.swift in Sources */,
+				B9409A07234BA6290037FC5E /* Storage.swift in Sources */,
+				B94099D9234B88F20037FC5E /* Parameter.swift in Sources */,
+				B94099F8234BA4160037FC5E /* MetalTextureHelper.swift in Sources */,
+				B94099FE234BA4830037FC5E /* MetalView.swift in Sources */,
+				B94099DA234B88F20037FC5E /* ParameterKeys.swift in Sources */,
+				B9409A09234BA64E0037FC5E /* String+Helpers.swift in Sources */,
+				B94099E6234B97B30037FC5E /* LocalizationManager.swift in Sources */,
+				B94099DF234B88F20037FC5E /* Filter.swift in Sources */,
+				B9409A0B234BA6ED0037FC5E /* MetalHelpers.swift in Sources */,
+				B94099C8234B84FC0037FC5E /* PassthroughKernel.metal in Sources */,
 				B9409997234B845C0037FC5E /* AppDelegate.swift in Sources */,
+				B94099E1234B88F20037FC5E /* FilterParameters.swift in Sources */,
+				B94099FD234BA4830037FC5E /* SimulatorMetalView.swift in Sources */,
 				B9409999234B845C0037FC5E /* SceneDelegate.swift in Sources */,
+				B94099DB234B88F20037FC5E /* TextureLoader.swift in Sources */,
+				B94099D8234B88F20037FC5E /* FilterAuthor.swift in Sources */,
+				B94099F2234B9FA20037FC5E /* CenteredItemViewConvertible.swift in Sources */,
+				B9409A03234BA5E50037FC5E /* FoundationExtensions.swift in Sources */,
+				B94099F6234BA38D0037FC5E /* AssetHelper.swift in Sources */,
+				B94099F4234B9FE20037FC5E /* Event.swift in Sources */,
+				B9409A01234BA4C70037FC5E /* MetalHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
