@@ -47,6 +47,8 @@ final class FilterHelper {
         let naturalSize = videoTrack.naturalSize
         var presentingSize = videoTrack.naturalSize.applying(videoTrack.preferredTransform)
         
+        let shouldRotateVideo = !naturalSize.equalTo(presentingSize)
+
         presentingSize.width = abs(presentingSize.width)
         presentingSize.height = abs(presentingSize.height)
         
@@ -159,7 +161,7 @@ final class FilterHelper {
                         
                         self?.videoProcessor.time = Float(time.seconds)
                         #if !targetEnvironment(simulator)
-                        if let texture = self?.videoProcessor.process(imageBufferRef),
+                        if let texture = self?.videoProcessor.process(imageBufferRef, rotate: shouldRotateVideo),
                             let buffer = MetalTextureHelper.createPixelBuffer(forTexture: texture) {
                             pixelBufferAdaptor.append(buffer, withPresentationTime: time)
                         }
@@ -194,7 +196,7 @@ final class FilterHelper {
         videoProcessor.inputHeight = Int(height)
         videoProcessor.time = Float(time)
         
-        guard let texture = videoProcessor.process(pixelBuffer)
+        guard let texture = videoProcessor.process(pixelBuffer, rotate: false)
             else { return nil }
         
         return texture

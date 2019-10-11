@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9021894234FAF5D0010B380 /* blankTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = B9021893234FAF5D0010B380 /* blankTexture.png */; };
 		B9409997234B845C0037FC5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409996234B845C0037FC5E /* AppDelegate.swift */; };
 		B9409999234B845C0037FC5E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9409998234B845C0037FC5E /* SceneDelegate.swift */; };
 		B940999B234B845C0037FC5E /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940999A234B845C0037FC5E /* CameraViewController.swift */; };
@@ -67,7 +68,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B902189F2350C12F0010B380 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B9021893234FAF5D0010B380 /* blankTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankTexture.png; sourceTree = "<group>"; };
 		B9409993234B845C0037FC5E /* Show Filter Sandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Show Filter Sandbox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9409996234B845C0037FC5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9409998234B845C0037FC5E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +183,7 @@
 				B94099F9234BA4830037FC5E /* MetalView */,
 				B94099CA234B88F10037FC5E /* Filter */,
 				B9409996234B845C0037FC5E /* AppDelegate.swift */,
+				B9021893234FAF5D0010B380 /* blankTexture.png */,
 				B9409A0A234BA6ED0037FC5E /* MetalHelpers.swift */,
 				B94099F5234BA38D0037FC5E /* AssetHelper.swift */,
 				B94099F1234B9FA20037FC5E /* CenteredItemViewConvertible.swift */,
@@ -254,6 +270,8 @@
 				B940998F234B845C0037FC5E /* Sources */,
 				B9409990234B845C0037FC5E /* Frameworks */,
 				B9409991234B845C0037FC5E /* Resources */,
+				B902189F2350C12F0010B380 /* Embed Frameworks */,
+				B90218A02350C1600010B380 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -348,6 +366,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9021894234FAF5D0010B380 /* blankTexture.png in Resources */,
 				B94099A3234B845E0037FC5E /* LaunchScreen.storyboard in Resources */,
 				B94099A0234B845E0037FC5E /* Assets.xcassets in Resources */,
 				B940999E234B845C0037FC5E /* Main.storyboard in Resources */,
@@ -369,6 +388,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B90218A02350C1600010B380 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B940998F234B845C0037FC5E /* Sources */ = {
@@ -585,6 +625,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S3FUXBGMUL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Show Filter Sandbox/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -603,6 +648,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S3FUXBGMUL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Show Filter Sandbox/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

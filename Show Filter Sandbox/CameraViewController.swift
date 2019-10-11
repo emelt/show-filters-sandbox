@@ -11,6 +11,7 @@ import UIKit
 import MetalKit
 import CoreMedia
 import os.log
+import SnapKit
 
 protocol CameraViewControllerDelegate: class {
     func cameraViewDidToggleCamera(to position: AVCaptureDevice.Position)
@@ -63,7 +64,6 @@ public final class CameraViewController: UIViewController {
         self.currentCameraPosition = .back
         self.filter = MetalHelper.shared.passthroughKernel
         super.init(coder: aDecoder)
-        performInitialSetup()
     }
     
     deinit {
@@ -72,7 +72,8 @@ public final class CameraViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+        performInitialSetup()
+
         switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized: break
         case .notDetermined:
@@ -130,9 +131,10 @@ extension CameraViewController {
     
     private func applyConstraints() {
         #if !targetEnvironment(simulator)
-        //metalView.snp.makeConstraints { make in
-        //    make.edges.equalToSuperview()
-        //}
+        
+        metalView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         #endif
     }
 }

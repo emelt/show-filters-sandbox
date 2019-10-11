@@ -26,7 +26,7 @@ final class TextureLoader {
         self.metalDevice = MTLCreateSystemDefaultDevice()!
         self.textureLoader = MTKTextureLoader(device: self.metalDevice)
         
-        var imagePath = Bundle(for: PassthroughKernel.self).path(forResource: "empty", ofType: "png")!
+        var imagePath = Bundle(for: PassthroughKernel.self).path(forResource: "blankTexture", ofType: "png")!
         var image = UIImage(contentsOfFile: imagePath)!
         self.emptyTexture = textureLoader.makeTexture(image: image)!
 

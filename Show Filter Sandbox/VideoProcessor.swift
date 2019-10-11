@@ -89,12 +89,24 @@ class VideoProcessor: NSObject, FilterDelegate, TransitionDelegate {
         super.init()
     }
 
-    func process(_ pixelBuffer: CVPixelBuffer) -> MTLTexture? {
+    func process(_ pixelBuffer: CVPixelBuffer, rotate:Bool) -> MTLTexture? {
         guard let commandBuffer = MetalHelper.shared.commandQueue.makeCommandBuffer(),
             var convertedTexture  = MetalHelper.shared.metalDevice.makeTexture(descriptor: self.convertedTextureDescriptor),
             let outputTexture = MetalHelper.shared.metalDevice.makeTexture(descriptor: self.convertedTextureDescriptor)
             else { return nil }
-        
+  
+        /*
+        if rotate {
+            if let inputTexture = TextureLoader.shared.makeTexture(from: pixelBuffer) {
+                MetalHelper.shared.rotateKernel.encode(commandBuffer: commandBuffer, sourceTexture: inputTexture, time: 0, destinationTexture: convertedTexture)
+            }
+        }
+        else {
+ */
+            guard let inputTexture = TextureLoader.shared.makeTexture(from: pixelBuffer) else { return nil }
+            convertedTexture = inputTexture
+   //     }
+
         if let filter = filter {
             if filter != MetalHelper.shared.passthroughKernel {
                 encode(filter: filter, commandBuffer: commandBuffer, convertedTexture: convertedTexture, time: time, outputTexture: outputTexture)
