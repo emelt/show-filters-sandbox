@@ -12,6 +12,7 @@ import MetalKit
 import CoreMedia
 import os.log
 import SnapKit
+import Photos
 
 protocol CameraViewControllerDelegate: class {
     func cameraViewDidToggleCamera(to position: AVCaptureDevice.Position)
@@ -19,6 +20,9 @@ protocol CameraViewControllerDelegate: class {
 }
 
 public final class CameraViewController: UIViewController {
+    
+    @IBOutlet weak var recordButton : UIButton!
+    @IBOutlet weak var switchCameraButton : UIButton!
     
     enum SessionSetupResult {
         case success
@@ -38,7 +42,7 @@ public final class CameraViewController: UIViewController {
     #if !targetEnvironment(simulator)
     private var metalView = MetalView()
     #endif
-    private var filter: Filter = MetalHelper.shared.passthroughKernel
+    private var filter: Filter = MetalHelper.shared.invertFilter
     
     internal var currentCameraPosition: AVCaptureDevice.Position
     private let referenceTime: CFTimeInterval = CFAbsoluteTimeGetCurrent()
@@ -62,7 +66,6 @@ public final class CameraViewController: UIViewController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         self.currentCameraPosition = .back
-        self.filter = MetalHelper.shared.passthroughKernel
         super.init(coder: aDecoder)
     }
     
@@ -73,7 +76,9 @@ public final class CameraViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         performInitialSetup()
-
+        recordButton.addTarget(self, action:#selector(recordTapped), for: .touchUpInside)
+        switchCameraButton.addTarget(self, action:#selector(switchCamera), for: .touchUpInside)
+        
         switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized: break
         case .notDetermined:
@@ -111,6 +116,17 @@ public final class CameraViewController: UIViewController {
                                             with coordinator: UIViewControllerTransitionCoordinator) {
         updateVideoTransformationsForCurrentOrientation()
     }
+    
+    @objc func recordTapped() {
+        if isVideoRecording {
+            recordButton.setImage(UIImage(named: "Play"), for: .normal)
+            stopRecording()
+        }
+        else {
+            recordButton.setImage(UIImage(named: "Stop"), for: .normal)
+            startRecording()
+        }
+    }
 }
 
 // MARK: Setup
@@ -123,9 +139,9 @@ extension CameraViewController {
     
     private func setupSubviews() {
         movieRecorder.delegate = self
-        
+
         #if !targetEnvironment(simulator)
-        view.addSubview(metalView)
+        view.insertSubview(metalView, belowSubview: recordButton)
         #endif
     }
     
@@ -172,7 +188,7 @@ extension CameraViewController: CameraViewRepresentable {
         }
     }
     
-    func switchCamera() {
+    @objc func switchCamera() {
         guard !isVideoRecording else { return }
         
         sessionQueue.async { [weak self] in
@@ -473,8 +489,8 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AV
         }
         #endif
         
-        movieRecorder.configureVideoFormatDescription(for: texture)
         guard isVideoRecording else { return }
+        movieRecorder.configureVideoFormatDescription(for: metalView.inputTexture!)
         movieRecorder.appendTexture(texture, withPresentationTime: presentationTime)
     }
     
@@ -508,6 +524,26 @@ extension CameraViewController: MovieRecorderDelegate {
     func movieRecorderDidFinishWriting(movieRecorder: MovieRecorder, url: URL) {
         isVideoRecording = false
         self.delegate?.cameraViewDidFinishProcessingVideo(at: url)
+        
+        requestPhotoLibraryAccess(completionHandler: { granted in
+            if granted {
+                PhotoAlbumHelper.shared.saveVideo(with: url, name: "", completion: { [weak self] success in
+                    
+                    DispatchQueue.main.async {
+                        if success {
+                          //  self?.view?.showSaveToStudioSuccessTip()
+                        } else {
+                         //   self?.view?.presentErrorAlert(withMessage: Localized("video_export_error"))
+                        }
+                    }
+                })
+            } else {
+                DispatchQueue.main.async {
+                    //LoadingHandler.shared.defaultLoading.stopLoading()
+                    //self.view?.presentErrorAlert(withMessage: Localized("photo_access_denied"))
+                }
+            }
+        })
     }
 }
 
@@ -580,6 +616,33 @@ extension CameraViewController {
         
         return nil
     }
+    
+    func requestPhotoLibraryAccess(completionHandler handler: ((Bool) -> Swift.Void)?) {
+        let authStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch authStatus {
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) in
+                if let handler = handler {
+                    switch status {
+                    case .authorized:
+                        handler(true)
+                    default:
+                        handler(false)
+                    }
+                }
+            })
+        case .authorized:
+            if let handler = handler {
+                handler(true)
+            }
+        case .restricted, .denied:
+            if let handler = handler {
+                handler(false)
+            }
+        }
+    }
+    
 }
 
 extension AVCaptureDevice.Position {
@@ -593,5 +656,25 @@ extension AVCaptureDevice.Position {
         @unknown default:
             return .back
         }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension CameraViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MetalHelper.shared.filters.count;
+    }
+
+     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellId : String = "FilterCollectionViewCell"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FilterCollectionViewCell
+        cell.iconImageView!.image = UIImage(named: MetalHelper.shared.filters[indexPath.row].name)
+        cell.titleLabel!.text = MetalHelper.shared.filters[indexPath.row].name
+        return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        filter = MetalHelper.shared.filters[indexPath.row]
     }
 }

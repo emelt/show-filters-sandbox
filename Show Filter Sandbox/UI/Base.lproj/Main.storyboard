@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Camera View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="CameraViewController" customModule="Show_Filter_Sandbox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDt-gl-kK5">
+                                <rect key="frame" x="164" y="669" width="86" height="86"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="86" id="aow-ak-WR0"/>
+                                    <constraint firstAttribute="height" constant="86" id="hyj-nU-A9r"/>
+                                </constraints>
+                                <state key="normal" image="Play.png"/>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wup-qd-Nut">
+                                <rect key="frame" x="20" y="763" width="374" height="133"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BTe-JY-WRq">
+                                    <size key="itemSize" width="100" height="105"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterCollectionViewCell" id="UW0-uD-9ea" customClass="FilterCollectionViewCell" customModule="Show_Filter_Sandbox" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="105"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="n8J-Tl-VJ4">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="105"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RQC-ep-NZb">
+                                                    <rect key="frame" x="0.0" y="70" width="100" height="38"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blankTexture.png" translatesAutoresizingMaskIntoConstraints="NO" id="vqp-CK-F4B">
+                                                    <rect key="frame" x="15" y="8" width="70" height="70"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="100" height="105"/>
+                                        <connections>
+                                            <outlet property="iconImageView" destination="vqp-CK-F4B" id="R2b-0c-B9o"/>
+                                            <outlet property="titleLabel" destination="RQC-ep-NZb" id="NZN-br-Pnk"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="AbE-Rq-pFU"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="mMb-Yt-AGd"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHl-EA-L0P" userLabel="Switch Cam Button">
+                                <rect key="frame" x="288" y="699" width="56" height="56"/>
+                                <state key="normal" image="iconSwitchCamera.png"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wup-qd-Nut" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="0Xr-da-qCp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jDt-gl-kK5" secondAttribute="trailing" constant="164" id="Hl7-DU-ATY"/>
+                            <constraint firstItem="wup-qd-Nut" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="I0D-r1-Kze"/>
+                            <constraint firstItem="jDt-gl-kK5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="164" id="M9r-cX-vMO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wHl-EA-L0P" secondAttribute="trailing" constant="70" id="Mry-sa-ezv"/>
+                            <constraint firstItem="wHl-EA-L0P" firstAttribute="leading" secondItem="jDt-gl-kK5" secondAttribute="trailing" constant="38" id="OdW-4M-bbj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wup-qd-Nut" secondAttribute="trailing" constant="20" id="RCl-2j-4mM"/>
+                            <constraint firstItem="wHl-EA-L0P" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="655" id="TIU-g8-KAs"/>
+                            <constraint firstItem="wup-qd-Nut" firstAttribute="top" secondItem="jDt-gl-kK5" secondAttribute="bottom" constant="8" id="b8V-mz-6eB"/>
+                            <constraint firstItem="wHl-EA-L0P" firstAttribute="bottom" secondItem="jDt-gl-kK5" secondAttribute="bottom" id="bZ7-e4-NXC"/>
+                            <constraint firstItem="wup-qd-Nut" firstAttribute="top" secondItem="jDt-gl-kK5" secondAttribute="bottom" constant="8" id="tcS-WK-0LM"/>
+                            <constraint firstItem="jDt-gl-kK5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="625" id="uiq-1c-JjQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="recordButton" destination="jDt-gl-kK5" id="P0G-K1-jD8"/>
+                        <outlet property="switchCameraButton" destination="wHl-EA-L0P" id="8hH-C1-Rfg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="109.82142857142857"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Play.png" width="198" height="198"/>
+        <image name="blankTexture.png" width="8" height="8"/>
+        <image name="iconSwitchCamera.png" width="49" height="48"/>
+    </resources>
+</document>

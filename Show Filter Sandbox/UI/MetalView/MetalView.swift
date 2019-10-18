@@ -11,7 +11,7 @@ import MetalPerformanceShaders
 import CoreAudio
 
 class MetalView: MTKView {
-    
+        
 	var inputTexture: MTLTexture? {
 		didSet {
 			setNeedsDisplay()

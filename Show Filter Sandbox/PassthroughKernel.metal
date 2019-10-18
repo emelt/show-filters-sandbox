@@ -16,7 +16,7 @@ kernel void passthroughKernel(texture2d<half, access::sample> inTexture [[ textu
 {
 	if ((gid.x >= inTexture.get_width()) || (gid.y >= inTexture.get_height())) { return; }
 
-	const half4 colorAtPixel = 1.-inTexture.read(gid);
+	const half4 colorAtPixel = inTexture.read(gid);
 	outTexture.write(colorAtPixel, gid);
 }
 

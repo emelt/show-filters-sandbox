@@ -15,7 +15,6 @@ final class TextureLoader {
     static var shared : TextureLoader = TextureLoader()
     
     var textureLoader : MTKTextureLoader
-    var emptyTexture : MTLTexture
     var blankTexture : MTLTexture
     var metalDevice : MTLDevice
     
@@ -26,12 +25,8 @@ final class TextureLoader {
         self.metalDevice = MTLCreateSystemDefaultDevice()!
         self.textureLoader = MTKTextureLoader(device: self.metalDevice)
         
-        var imagePath = Bundle(for: PassthroughKernel.self).path(forResource: "blankTexture", ofType: "png")!
-        var image = UIImage(contentsOfFile: imagePath)!
-        self.emptyTexture = textureLoader.makeTexture(image: image)!
-
-        imagePath = Bundle(for: PassthroughKernel.self).path(forResource: "blankTexture", ofType: "png")!
-        image = UIImage(contentsOfFile: imagePath)!
+        let imagePath = Bundle(for: TextureLoader.self).path(forResource: "blankTexture", ofType: "png")!
+        let image = UIImage(contentsOfFile: imagePath)!
         self.blankTexture = textureLoader.makeTexture(image: image)!
                 
         var textCache: CVMetalTextureCache?
@@ -49,7 +44,7 @@ final class TextureLoader {
             return textures[name]
         }
         
-        let imagePath = Bundle(for: PassthroughKernel.self).path(forResource: name, ofType: "png")!
+        let imagePath = Bundle(for: TextureLoader.self).path(forResource: name, ofType: "png")!
         let image = UIImage(contentsOfFile: imagePath)!
         
         let tex = textureLoader.makeTexture(image: image)!
