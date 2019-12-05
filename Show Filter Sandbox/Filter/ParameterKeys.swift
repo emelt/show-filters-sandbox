@@ -13,4 +13,5 @@ struct ParameterConstantKeys {
     static let DestinationTexture = "DestinationTexture"
     static let LastTexture = "LastTexture"
     static let Time = "Time"
+    static let UserControlParameter = "UserControlParameter"
 }

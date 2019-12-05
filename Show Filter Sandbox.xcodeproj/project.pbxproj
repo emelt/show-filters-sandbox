@@ -59,6 +59,7 @@
 		B9A2E0BD2359006500DBA926 /* FeedbackFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BB2359006400DBA926 /* FeedbackFilter.swift */; };
 		B9A2E0C02359F81400DBA926 /* PassthroughKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */; };
 		B9A2E0C12359F81400DBA926 /* PassthroughKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */; };
+		B9D05C3023995DC500B78660 /* Vec2Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,7 @@
 		B9A2E0BB2359006400DBA926 /* FeedbackFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackFilter.swift; sourceTree = "<group>"; };
 		B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PassthroughKernel.metal; sourceTree = "<group>"; };
 		B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughKernel.swift; sourceTree = "<group>"; };
+		B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vec2Parameter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +296,7 @@
 				B94099E5234B97B30037FC5E /* LocalizationManager.swift */,
 				B94099CB234B88F10037FC5E /* Kernel.swift */,
 				B94099CC234B88F10037FC5E /* FilterAuthor.swift */,
+				B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */,
 				B94099CD234B88F10037FC5E /* Parameter.swift */,
 				B94099CE234B88F10037FC5E /* ParameterKeys.swift */,
 				B94099CF234B88F10037FC5E /* TextureLoader.swift */,
@@ -520,6 +523,7 @@
 				B9A2E0C02359F81400DBA926 /* PassthroughKernel.metal in Sources */,
 				B94099E6234B97B30037FC5E /* LocalizationManager.swift in Sources */,
 				B94099DF234B88F20037FC5E /* Filter.swift in Sources */,
+				B9D05C3023995DC500B78660 /* Vec2Parameter.swift in Sources */,
 				B94099C8234B84FC0037FC5E /* InvertKernel.metal in Sources */,
 				B9409997234B845C0037FC5E /* AppDelegate.swift in Sources */,
 				B94099E1234B88F20037FC5E /* FilterParameters.swift in Sources */,

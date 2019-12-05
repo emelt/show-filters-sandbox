@@ -32,6 +32,14 @@ final class InvertFilter : Filter {
              ParameterConstantKeys.DestinationTexture:
                 TextureParameter(name:ParameterConstantKeys.DestinationTexture, texture: nil, targetIndex: 1)]
         
-        self.parameters = FilterParameters(textures: textures, floats: [:] )
+        let vector2s : [String:Vec2Parameter] =
+            [ ParameterConstantKeys.UserControlParameter:
+                Vec2Parameter(idx:        0,
+                              name:       ParameterConstantKeys.UserControlParameter,
+                              defaultVal: vector_float2(0.0, 0.0),
+                              bounds:     vector_float4(0.0, 1.0, 0.0, 1.0) )
+            ]
+        
+        self.parameters = FilterParameters(textures: textures, floats: [:], ints:[:], vector2s: vector2s)
     }
 }

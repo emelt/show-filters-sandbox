@@ -96,6 +96,10 @@ public final class CameraViewController: UIViewController {
         sessionQueue.async { [weak self] in
             self?.configureSession()
         }
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanScreen(gestureRecognizer:)))
+        panGestureRecognizer.delegate = self
+        self.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -127,8 +131,50 @@ public final class CameraViewController: UIViewController {
             startRecording()
         }
     }
+    
+    @objc private func didPanScreen(gestureRecognizer: UIPanGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .changed:
+            var pos = gestureRecognizer.location(in: gestureRecognizer.view)
+            pos.x /= gestureRecognizer.view?.bounds.width ?? 1.0
+            pos.y /= gestureRecognizer.view?.bounds.height ?? 1.0
+            controlsViewDidPan(value: pos)
+        default: break
+        }
+    }
+    
+    func controlsViewDidPan(value: CGPoint) {
+        self.filter.updateTouchPositionParameter(point: value)
+    }
 }
 
+extension CameraViewController : UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldReceive touch: UITouch) -> Bool {
+        guard let touchView = touch.view,
+            gestureRecognizer is UIPanGestureRecognizer else { return true }
+        
+        //if touchView.isDescendant(of: filterCollectionView) || touchView.isDescendant(of: recordingModeCollectionView) {
+        //    return false
+        //}
+        
+        return true
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UITapGestureRecognizer || otherGestureRecognizer is UITapGestureRecognizer {
+            return true
+        }
+        
+        if gestureRecognizer is UIPanGestureRecognizer || otherGestureRecognizer is UIPanGestureRecognizer {
+            return true
+        }
+        
+        return false
+    }
+}
 // MARK: Setup
 extension CameraViewController {
     

@@ -12,6 +12,7 @@ class FilterParameters {
     public var textures:[String:TextureParameter] = [:]
     public var floats:[String:FloatParameter] = [:]
     public var ints:[String:IntParameter] = [:]
+    public var vector2s:[String:Vec2Parameter] = [:]
     
     init ()
     {
@@ -28,5 +29,12 @@ class FilterParameters {
         self.textures = textures
         self.floats = floats
         self.ints = ints
+    }
+    init(textures:[String:TextureParameter], floats:[String:FloatParameter], ints:[String:IntParameter], vector2s:[String:Vec2Parameter])
+    {
+        self.textures = textures
+        self.floats = floats
+        self.ints = ints
+        self.vector2s = vector2s
     }
 }

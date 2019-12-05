@@ -72,6 +72,11 @@ class Filter : NSObject {
             var v = param.currentValue
             encoder.setBytes(&v, length: MemoryLayout<Int>.size, index: param.targetIndex)
         }
+        
+        for (_, param) in parameters.vector2s {
+            var v = param.currentValue
+            encoder.setBytes(&v, length: MemoryLayout<vector_float2>.size, index: param.targetIndex)
+        }
     }
     
     func baseInit(device: MTLDevice) {} // Load the kernel, make the compute pipeline state
@@ -88,6 +93,13 @@ class Filter : NSObject {
         }
         
         postRender()
+    }
+    
+    func updateTouchPositionParameter(point: CGPoint)
+    {
+        if let param = parameters.vector2s[ParameterConstantKeys.UserControlParameter] {
+            param.updateWithPoint(v: point)
+        }
     }
 }
 

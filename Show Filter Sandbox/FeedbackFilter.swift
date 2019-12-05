@@ -40,6 +40,14 @@ class FeedbackFilter : Filter {
                 "param":
                     FloatParameter(idx: 1, name: "param", defaultVal: 0.0, range: (0.0,0.0))]
         
-        self.parameters = FilterParameters(textures: textures, floats: floats )
+        let vector2s : [String:Vec2Parameter] =
+            [ ParameterConstantKeys.UserControlParameter:
+                Vec2Parameter(idx:        1,
+                              name:       ParameterConstantKeys.UserControlParameter,
+                              defaultVal: vector_float2(2.0, 0.75),
+                              bounds:     vector_float4(0.0, 4.0, 0.5, 1.0) )
+            ]
+        
+        self.parameters = FilterParameters(textures: textures, floats: floats, ints:[:], vector2s: vector2s)
     }
 }
