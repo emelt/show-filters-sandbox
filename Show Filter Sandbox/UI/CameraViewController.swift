@@ -52,6 +52,8 @@ public final class CameraViewController: UIViewController {
     private let videoQueue = DispatchQueue(label: "com.mavfarm.camera.videoQueue")
     private var audioDeviceInput: AVCaptureDeviceInput?
     
+    private let audioBuffer = AudioBuffer()
+
     override public var shouldAutorotate: Bool {
         return false
     }
@@ -353,6 +355,11 @@ extension CameraViewController {
         session.beginConfiguration()
         configureVideoPreset()
         addVideoInput()
+        
+        if self.filter.wantsAudio {
+            addAudioInput()
+        }
+        
         session.commitConfiguration()
     }
     
@@ -552,6 +559,11 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AV
     private func processAudioOutput(_ output: AVCaptureOutput,
                                     didOutput sampleBuffer: CMSampleBuffer,
                                     from connection: AVCaptureConnection) {
+        
+        if self.filter.wantsAudio
+        {
+            audioBuffer.updateAudioBuffer(sampleBuffer: sampleBuffer, filter: self.filter)
+        }
         
         movieRecorder.configureAudioFormatDescription(forBuffer: sampleBuffer)
         

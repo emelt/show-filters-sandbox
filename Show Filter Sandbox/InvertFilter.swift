@@ -23,6 +23,11 @@ final class InvertFilter : Filter {
         set { }
     }
     
+    public override var wantsAudio: Bool {
+        get { return true }
+        set { }
+    }
+    
     init(device: MTLDevice) {
         super.init(device: device, name: "InvertKernel")
         
@@ -39,7 +44,7 @@ final class InvertFilter : Filter {
                               defaultVal: vector_float2(0.0, 0.0),
                               bounds:     vector_float4(0.0, 1.0, 0.0, 1.0) )
             ]
-        
         self.parameters = FilterParameters(textures: textures, floats: [:], ints:[:], vector2s: vector2s)
+        self.createAudioBuffer(bufferIndex: 1)
     }
 }

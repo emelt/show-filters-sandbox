@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import MetalKit
 
 class FilterParameters {
     public var textures:[String:TextureParameter] = [:]
     public var floats:[String:FloatParameter] = [:]
     public var ints:[String:IntParameter] = [:]
     public var vector2s:[String:Vec2Parameter] = [:]
+    
+    public var wantsAudio : Bool = false
+    public var audioBuffer : MTLBuffer?
+    public var audioBufferIndex : Int?
     
     init ()
     {
@@ -36,5 +41,14 @@ class FilterParameters {
         self.floats = floats
         self.ints = ints
         self.vector2s = vector2s
+    }
+    public func createAudioBuffer(bufferIndex: Int) {
+        let data = [Float](repeating: Float(), count: 128)
+
+        self.audioBufferIndex = bufferIndex
+        self.wantsAudio = true
+        self.audioBuffer = TextureLoader.shared.metalDevice.makeBuffer(bytes: data,
+                                                                       length:MemoryLayout<Float>.size * data.count,
+                                                                       options:[])!
     }
 }

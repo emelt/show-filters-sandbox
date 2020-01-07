@@ -60,6 +60,7 @@
 		B9A2E0C02359F81400DBA926 /* PassthroughKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */; };
 		B9A2E0C12359F81400DBA926 /* PassthroughKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */; };
 		B9D05C3023995DC500B78660 /* Vec2Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */; };
+		B9E5516B23BE3E37000D4F58 /* AudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E5516A23BE3E36000D4F58 /* AudioBuffer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PassthroughKernel.metal; sourceTree = "<group>"; };
 		B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughKernel.swift; sourceTree = "<group>"; };
 		B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vec2Parameter.swift; sourceTree = "<group>"; };
+		B9E5516A23BE3E36000D4F58 /* AudioBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBuffer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,7 @@
 		B90218A42353FA480010B380 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				B9E5516A23BE3E36000D4F58 /* AudioBuffer.swift */,
 				B9409A06234BA6290037FC5E /* Storage.swift */,
 				B94099F3234B9FE20037FC5E /* Event.swift */,
 				B9409998234B845C0037FC5E /* SceneDelegate.swift */,
@@ -518,6 +521,7 @@
 				B9A2E0BC2359006500DBA926 /* FeedbackKernel.metal in Sources */,
 				B94099F8234BA4160037FC5E /* MetalTextureHelper.swift in Sources */,
 				B94099FE234BA4830037FC5E /* MetalView.swift in Sources */,
+				B9E5516B23BE3E37000D4F58 /* AudioBuffer.swift in Sources */,
 				B94099DA234B88F20037FC5E /* ParameterKeys.swift in Sources */,
 				B9409A09234BA64E0037FC5E /* String+Helpers.swift in Sources */,
 				B9A2E0C02359F81400DBA926 /* PassthroughKernel.metal in Sources */,
