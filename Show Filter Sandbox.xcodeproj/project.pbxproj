@@ -59,6 +59,11 @@
 		B9A2E0BD2359006500DBA926 /* FeedbackFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BB2359006400DBA926 /* FeedbackFilter.swift */; };
 		B9A2E0C02359F81400DBA926 /* PassthroughKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */; };
 		B9A2E0C12359F81400DBA926 /* PassthroughKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */; };
+		B9CEF27423C63A960090B7B1 /* Sobel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9CEF26A23C63A960090B7B1 /* Sobel.metal */; };
+		B9CEF27523C63A960090B7B1 /* hue.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9CEF26B23C63A960090B7B1 /* hue.metal */; };
+		B9CEF27623C63A960090B7B1 /* NoiseFuncs.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9CEF26E23C63A960090B7B1 /* NoiseFuncs.metal */; };
+		B9CEF27723C63A960090B7B1 /* hsv.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9CEF26F23C63A960090B7B1 /* hsv.metal */; };
+		B9CEF27823C63A960090B7B1 /* blending.metal in Sources */ = {isa = PBXBuildFile; fileRef = B9CEF27123C63A960090B7B1 /* blending.metal */; };
 		B9D05C3023995DC500B78660 /* Vec2Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */; };
 		B9E5516B23BE3E37000D4F58 /* AudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E5516A23BE3E36000D4F58 /* AudioBuffer.swift */; };
 /* End PBXBuildFile section */
@@ -152,6 +157,16 @@
 		B9A2E0BB2359006400DBA926 /* FeedbackFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackFilter.swift; sourceTree = "<group>"; };
 		B9A2E0BE2359F81400DBA926 /* PassthroughKernel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PassthroughKernel.metal; sourceTree = "<group>"; };
 		B9A2E0BF2359F81400DBA926 /* PassthroughKernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughKernel.swift; sourceTree = "<group>"; };
+		B9CEF26A23C63A960090B7B1 /* Sobel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Sobel.metal; sourceTree = "<group>"; };
+		B9CEF26B23C63A960090B7B1 /* hue.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = hue.metal; sourceTree = "<group>"; };
+		B9CEF26C23C63A960090B7B1 /* NoiseFuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoiseFuncs.h; sourceTree = "<group>"; };
+		B9CEF26D23C63A960090B7B1 /* blending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blending.h; sourceTree = "<group>"; };
+		B9CEF26E23C63A960090B7B1 /* NoiseFuncs.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = NoiseFuncs.metal; sourceTree = "<group>"; };
+		B9CEF26F23C63A960090B7B1 /* hsv.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = hsv.metal; sourceTree = "<group>"; };
+		B9CEF27023C63A960090B7B1 /* hsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hsv.h; sourceTree = "<group>"; };
+		B9CEF27123C63A960090B7B1 /* blending.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = blending.metal; sourceTree = "<group>"; };
+		B9CEF27223C63A960090B7B1 /* hue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hue.h; sourceTree = "<group>"; };
+		B9CEF27323C63A960090B7B1 /* Sobel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sobel.h; sourceTree = "<group>"; };
 		B9D05C2F23995DC500B78660 /* Vec2Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vec2Parameter.swift; sourceTree = "<group>"; };
 		B9E5516A23BE3E36000D4F58 /* AudioBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBuffer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +271,7 @@
 		B9409995234B845C0037FC5E /* Show Filter Sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				B9CEF26923C63A960090B7B1 /* Includes */,
 				B9A2E0BB2359006400DBA926 /* FeedbackFilter.swift */,
 				B9A2E0BA2359006400DBA926 /* FeedbackKernel.metal */,
 				B94099C6234B84FB0037FC5E /* InvertKernel.metal */,
@@ -336,6 +352,23 @@
 			name = Images;
 			path = "Show Filter Sandbox/Images";
 			sourceTree = SOURCE_ROOT;
+		};
+		B9CEF26923C63A960090B7B1 /* Includes */ = {
+			isa = PBXGroup;
+			children = (
+				B9CEF26A23C63A960090B7B1 /* Sobel.metal */,
+				B9CEF26B23C63A960090B7B1 /* hue.metal */,
+				B9CEF26C23C63A960090B7B1 /* NoiseFuncs.h */,
+				B9CEF26D23C63A960090B7B1 /* blending.h */,
+				B9CEF26E23C63A960090B7B1 /* NoiseFuncs.metal */,
+				B9CEF26F23C63A960090B7B1 /* hsv.metal */,
+				B9CEF27023C63A960090B7B1 /* hsv.h */,
+				B9CEF27123C63A960090B7B1 /* blending.metal */,
+				B9CEF27223C63A960090B7B1 /* hue.h */,
+				B9CEF27323C63A960090B7B1 /* Sobel.h */,
+			);
+			path = Includes;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -498,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B94099E0234B88F20037FC5E /* Transition.swift in Sources */,
+				B9CEF27523C63A960090B7B1 /* hue.metal in Sources */,
 				B94099F0234B9ED60037FC5E /* FilterHelper.swift in Sources */,
 				B94099D7234B88F20037FC5E /* Kernel.swift in Sources */,
 				B94099EE234B9E770037FC5E /* VideoProcessor.swift in Sources */,
@@ -514,11 +548,14 @@
 				B9A2E0AF2358B2E900DBA926 /* PhotoAlbumHelper.swift in Sources */,
 				B9A2E0C12359F81400DBA926 /* PassthroughKernel.swift in Sources */,
 				B94099E2234B88F20037FC5E /* IntParameter.swift in Sources */,
+				B9CEF27823C63A960090B7B1 /* blending.metal in Sources */,
 				B94099E8234B98250037FC5E /* FPS.swift in Sources */,
 				B94099DE234B88F20037FC5E /* FloatParameter.swift in Sources */,
 				B9409A07234BA6290037FC5E /* Storage.swift in Sources */,
 				B94099D9234B88F20037FC5E /* Parameter.swift in Sources */,
+				B9CEF27423C63A960090B7B1 /* Sobel.metal in Sources */,
 				B9A2E0BC2359006500DBA926 /* FeedbackKernel.metal in Sources */,
+				B9CEF27623C63A960090B7B1 /* NoiseFuncs.metal in Sources */,
 				B94099F8234BA4160037FC5E /* MetalTextureHelper.swift in Sources */,
 				B94099FE234BA4830037FC5E /* MetalView.swift in Sources */,
 				B9E5516B23BE3E37000D4F58 /* AudioBuffer.swift in Sources */,
@@ -532,6 +569,7 @@
 				B9409997234B845C0037FC5E /* AppDelegate.swift in Sources */,
 				B94099E1234B88F20037FC5E /* FilterParameters.swift in Sources */,
 				B94099FD234BA4830037FC5E /* SimulatorMetalView.swift in Sources */,
+				B9CEF27723C63A960090B7B1 /* hsv.metal in Sources */,
 				B9409999234B845C0037FC5E /* SceneDelegate.swift in Sources */,
 				B94099DB234B88F20037FC5E /* TextureLoader.swift in Sources */,
 				B94099D8234B88F20037FC5E /* FilterAuthor.swift in Sources */,
